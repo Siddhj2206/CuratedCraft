@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 
 // Pages
 import Home from "./pages/Home";
@@ -68,9 +67,7 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Background effects */}
-      <div className="blur-gradient w-[500px] h-[500px] -top-[150px] -left-[150px] z-[-1]"></div>
-      <div className="blur-gradient w-[500px] h-[500px] top-[30%] right-[10%] z-[-1]"></div>
+      <div className="bg-gradient-to-r from-accent to-accent-light opacity-20 blur-3xl rounded-full w-[500px] h-[500px] fixed -top-[150px] -left-[150px] z-[-1]"></div>
 
       <Navbar
         toggleCart={toggleCart}
@@ -82,13 +79,11 @@ function App() {
       />
 
       <main className="flex-grow">
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home />} />
-            <Route path="/shop" element={<Shop addToCart={addToCart} />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
-        </AnimatePresence>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop addToCart={addToCart} />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
       </main>
 
       <Footer />

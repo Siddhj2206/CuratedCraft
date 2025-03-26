@@ -90,14 +90,6 @@ const Footer = () => {
                   FAQs
                 </a>
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:text-accent-light transition-colors"
-                >
-                  Become a Seller
-                </a>
-              </li>
             </ul>
           </div>
 
@@ -135,14 +127,6 @@ const Footer = () => {
                   className="text-gray-300 hover:text-accent-light transition-colors"
                 >
                   Art & Collectibles
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:text-accent-light transition-colors"
-                >
-                  Vintage
                 </a>
               </li>
             </ul>
@@ -187,12 +171,6 @@ const Footer = () => {
               className="text-gray-400 text-sm hover:text-accent-light transition-colors"
             >
               Terms of Service
-            </a>
-            <a
-              href="#"
-              className="text-gray-400 text-sm hover:text-accent-light transition-colors"
-            >
-              Shipping Policy
             </a>
           </div>
         </div>

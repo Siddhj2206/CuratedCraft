@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { useQuery } from "react-query";
 import {
   FaStar,
@@ -77,7 +76,6 @@ const Shop = ({ addToCart }) => {
         result.sort((a, b) => b.rating - a.rating);
         break;
       default:
-        // Default sorting (id order)
         result.sort((a, b) => a.id - b.id);
     }
 
@@ -90,13 +88,7 @@ const Shop = ({ addToCart }) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-      className="py-10"
-    >
+    <div className="py-10">
       <div className="container-custom">
         {/* Page title */}
         <div className="mb-8">
@@ -216,81 +208,81 @@ const Shop = ({ addToCart }) => {
           </div>
 
           {/* Filter sidebar - mobile */}
-          <div
-            className={`lg:hidden fixed inset-0 z-50 bg-dark/80 backdrop-blur-sm transition-opacity duration-300 ${isFilterOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-            onClick={toggleFilter}
-          >
-            <motion.div
-              className="absolute right-0 top-0 bottom-0 w-[280px] bg-dark-gray overflow-auto p-6"
-              initial={{ x: "100%" }}
-              animate={{ x: isFilterOpen ? 0 : "100%" }}
-              transition={{ duration: 0.3 }}
-              onClick={(e) => e.stopPropagation()}
+          {isFilterOpen && (
+            <div
+              className="lg:hidden fixed inset-0 z-50 bg-dark/80 backdrop-blur-sm"
+              onClick={toggleFilter}
             >
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="font-bold text-xl">Filters</h3>
-                <button onClick={toggleFilter}>
-                  <FaTimes />
-                </button>
-              </div>
+              <div
+                className="absolute right-0 top-0 bottom-0 w-[280px] bg-dark-gray overflow-auto p-6"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="font-bold text-xl">Filters</h3>
+                  <button onClick={toggleFilter}>
+                    <FaTimes />
+                  </button>
+                </div>
 
-              {/* Categories */}
-              <div className="mb-6">
-                <h4 className="font-medium mb-3">Categories</h4>
-                {categoriesLoading ? (
-                  <div className="animate-pulse space-y-2">
-                    {[1, 2, 3, 4, 5].map((index) => (
-                      <div
-                        key={index}
-                        className="h-6 bg-light-gray/20 rounded"
-                      ></div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    <div
-                      className={`cursor-pointer hover:text-accent-light transition-colors ${selectedCategory === "all" ? "text-accent-light font-medium" : ""}`}
-                      onClick={() => {
-                        setSelectedCategory("all");
-                        toggleFilter();
-                      }}
-                    >
-                      All Categories
+                {/* Categories */}
+                <div className="mb-6">
+                  <h4 className="font-medium mb-3">Categories</h4>
+                  {categoriesLoading ? (
+                    <div className="animate-pulse space-y-2">
+                      {[1, 2, 3, 4, 5].map((index) => (
+                        <div
+                          key={index}
+                          className="h-6 bg-light-gray/20 rounded"
+                        ></div>
+                      ))}
                     </div>
-                    {categories?.map((category) => (
+                  ) : (
+                    <div className="space-y-2">
                       <div
-                        key={category}
-                        className={`cursor-pointer hover:text-accent-light transition-colors ${selectedCategory === category ? "text-accent-light font-medium" : ""}`}
+                        className={`cursor-pointer hover:text-accent-light transition-colors ${selectedCategory === "all" ? "text-accent-light font-medium" : ""}`}
                         onClick={() => {
-                          setSelectedCategory(category);
+                          setSelectedCategory("all");
                           toggleFilter();
                         }}
                       >
-                        {typeof category === "string"
-                          ? category.charAt(0).toUpperCase() + category.slice(1)
-                          : String(category)}
+                        All Categories
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+                      {categories?.map((category) => (
+                        <div
+                          key={category}
+                          className={`cursor-pointer hover:text-accent-light transition-colors ${selectedCategory === category ? "text-accent-light font-medium" : ""}`}
+                          onClick={() => {
+                            setSelectedCategory(category);
+                            toggleFilter();
+                          }}
+                        >
+                          {typeof category === "string"
+                            ? category.charAt(0).toUpperCase() +
+                              category.slice(1)
+                            : String(category)}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
-              {/* Sort by */}
-              <div>
-                <h4 className="font-medium mb-3">Sort by</h4>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="w-full p-2 bg-dark-gray border border-light-gray/20 rounded-lg focus:outline-none focus:border-accent"
-                >
-                  <option value="default">Default</option>
-                  <option value="price-low">Price: Low to High</option>
-                  <option value="price-high">Price: High to Low</option>
-                  <option value="rating">Rating</option>
-                </select>
+                {/* Sort by */}
+                <div>
+                  <h4 className="font-medium mb-3">Sort by</h4>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="w-full p-2 bg-dark-gray border border-light-gray/20 rounded-lg focus:outline-none focus:border-accent"
+                  >
+                    <option value="default">Default</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Rating</option>
+                  </select>
+                </div>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          )}
 
           {/* Products grid */}
           <div className="flex-1">
@@ -341,24 +333,14 @@ const Shop = ({ addToCart }) => {
                 </button>
               </div>
             ) : (
-              <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProducts.map((product) => (
-                  <motion.div
-                    key={product.id}
-                    className="card overflow-hidden group"
-                    whileHover={{ y: -5 }}
-                    transition={{ duration: 0.2 }}
-                  >
+                  <div key={product.id} className="card overflow-hidden group">
                     <div className="relative overflow-hidden">
                       <img
                         src={product.thumbnail}
                         alt={product.title}
-                        className="w-full h-[220px] object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="w-full h-[220px] object-cover"
                       />
                       {product.discountPercentage > 0 && (
                         <div className="absolute top-3 right-3 bg-accent-light text-white text-sm px-2 py-1 rounded-full">
@@ -394,14 +376,14 @@ const Shop = ({ addToCart }) => {
                         </button>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             )}
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

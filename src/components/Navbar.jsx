@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
 import { FaShoppingCart, FaBars, FaTimes, FaCommentDots } from "react-icons/fa";
 
 const Navbar = ({ toggleCart, cartItemsCount, toggleChatbot }) => {
@@ -10,8 +9,7 @@ const Navbar = ({ toggleCart, cartItemsCount, toggleChatbot }) => {
   // Handle scroll event to change navbar appearance
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 50);
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -113,48 +111,40 @@ const Navbar = ({ toggleCart, cartItemsCount, toggleChatbot }) => {
       </div>
 
       {/* Mobile menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            className="md:hidden fixed inset-0 z-50 bg-dark/95 pt-20"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <nav className="flex flex-col items-center gap-6 p-6">
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `text-xl ${isActive ? "text-accent-light" : "text-white"}`
-                }
-                onClick={closeMobileMenu}
-                end
-              >
-                Home
-              </NavLink>
-              <NavLink
-                to="/shop"
-                className={({ isActive }) =>
-                  `text-xl ${isActive ? "text-accent-light" : "text-white"}`
-                }
-                onClick={closeMobileMenu}
-              >
-                Shop
-              </NavLink>
-              <NavLink
-                to="/about"
-                className={({ isActive }) =>
-                  `text-xl ${isActive ? "text-accent-light" : "text-white"}`
-                }
-                onClick={closeMobileMenu}
-              >
-                About
-              </NavLink>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-50 bg-dark/95 pt-20">
+          <nav className="flex flex-col items-center gap-6 p-6">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `text-xl ${isActive ? "text-accent-light" : "text-white"}`
+              }
+              onClick={closeMobileMenu}
+              end
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/shop"
+              className={({ isActive }) =>
+                `text-xl ${isActive ? "text-accent-light" : "text-white"}`
+              }
+              onClick={closeMobileMenu}
+            >
+              Shop
+            </NavLink>
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                `text-xl ${isActive ? "text-accent-light" : "text-white"}`
+              }
+              onClick={closeMobileMenu}
+            >
+              About
+            </NavLink>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
